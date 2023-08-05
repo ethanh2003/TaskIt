@@ -1,4 +1,4 @@
-package com.example.taskit;
+package com.example.tasker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
