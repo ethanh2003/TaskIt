@@ -18,9 +18,9 @@ public class TaskController {
 
     @PostMapping
     public Task createTask(@RequestBody Task task) {
-        System.out.println("Received task: " + task); // Check if task object is received correctly
+        System.out.println("Received task: " + task);
         Task savedTask = taskRepository.save(task);
-        System.out.println("Saved task: " + savedTask); // Check if task is saved successfully
+        System.out.println("Saved task: " + savedTask);
         return savedTask;
     }
 

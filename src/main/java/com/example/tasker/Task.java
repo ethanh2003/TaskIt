@@ -2,10 +2,7 @@ package com.example.tasker;
 
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Getter
@@ -18,18 +15,30 @@ public class Task {
     private String description;
     private boolean completed;
 
-    public Task(Long id, String title, String description, boolean completed) {
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+    public Task(Long id, String title, String description, boolean completed, Long user_Id) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.id = id;
     }
 
     public Task() {
 
     }
 
-    // Getters and Setters
+
+
+    public Long getid() {
+        return id;
+    }
+
+    public void setid(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -62,4 +71,6 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+
 }

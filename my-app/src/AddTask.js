@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddTask = () => {
+
+const AddTask = ({ userId }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('/api/tasks', { id: null, title, description, completed: false }) // Set completed to false by default
+        axios.post('/api/tasks', { id: null, title, description, completed: false }, { params: { userId } })
             .then(response => {
                 console.log('Task added successfully:', response.data);
+
             })
             .catch(error => console.error(error));
 
         setTitle('');
         setDescription('');
-    }
+    };
 
     return (
         <div>
@@ -30,6 +32,6 @@ const AddTask = () => {
             </form>
         </div>
     );
-}
+};
 
 export default AddTask;
