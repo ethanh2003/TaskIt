@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const UserLogin = ({ handleLogin }) => {
     const [username, setUsername] = useState('');
@@ -9,20 +11,15 @@ const UserLogin = ({ handleLogin }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
         try {
-
-            const response = await fetch('/api/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
+            const response = await axios.post('/api/users/login', {
+                username,
+                password,
             });
 
-            if (response.ok) {
-                const userData = await response.json();
-                handleLogin(userData);
+            if (response.status === 200) {
+                const token = response.data;
+                handleLogin(token);
             } else {
                 setError('Invalid username or password');
             }

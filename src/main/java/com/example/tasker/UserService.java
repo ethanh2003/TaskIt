@@ -33,6 +33,7 @@ public class UserService {
         return user.isPresent() && passwordEncoder.matches(loginRequest.getPassword(), user.get().getPassword());
     }
 
+
     public List<Task> getUserTasks(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
