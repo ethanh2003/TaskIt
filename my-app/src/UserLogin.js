@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-axios.defaults.withCredentials = true;
 
 const UserLogin = ({ handleLogin }) => {
     const [username, setUsername] = useState('');
@@ -12,7 +11,9 @@ const UserLogin = ({ handleLogin }) => {
         e.preventDefault();
 
         try {
+
             const response = await axios.post('/api/users/login', {
+
                 username,
                 password,
             });

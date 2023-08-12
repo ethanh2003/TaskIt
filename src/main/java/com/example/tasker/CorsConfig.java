@@ -15,7 +15,10 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization")
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .maxAge(3600);
+
+
     }
 }
 
