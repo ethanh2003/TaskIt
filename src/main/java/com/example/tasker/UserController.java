@@ -32,10 +32,13 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
         if (userService.loginUser(loginRequest)) {
             String token = "your_generated_token_here";
+            System.out.println("if");
             HttpHeaders headers = new HttpHeaders();
             headers.add("Access-Control-Allow-Origin", "http://localhost:3000");
+
             return ResponseEntity.ok(token);
         } else {
+            System.out.println("else");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
