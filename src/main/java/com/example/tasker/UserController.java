@@ -30,6 +30,8 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
+        System.out.println("Received Username: " + loginRequest.getUsername());
+        System.out.println(loginRequest);
         if (userService.loginUser(loginRequest)) {
             String token = "your_generated_token_here";
             System.out.println("if");
@@ -39,7 +41,7 @@ public class UserController {
             return ResponseEntity.ok(token);
         } else {
             System.out.println("else");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 

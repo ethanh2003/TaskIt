@@ -1,14 +1,11 @@
 package com.example.tasker;
 
-import lombok.Getter;
-
 import javax.validation.constraints.NotBlank;
 
 public class UserLoginRequest {
     @NotBlank
     private String username;
 
-    @Getter
     @NotBlank
     private String password;
 
@@ -16,7 +13,7 @@ public class UserLoginRequest {
         return username;
     }
 
-    public void setUsername(String usernameOrEmail) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
