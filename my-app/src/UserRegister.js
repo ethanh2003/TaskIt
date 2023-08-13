@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-import { useHistory } from 'react-router-dom';
 
 const UserRegister = () => {
     axios.defaults.withCredentials = true;
@@ -12,6 +11,8 @@ const UserRegister = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        console.log(username)
+        console.log(password)
         try {
             await axios.post('/api/users/register', { username, password, email });
 

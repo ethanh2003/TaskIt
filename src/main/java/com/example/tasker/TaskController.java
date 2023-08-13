@@ -17,7 +17,7 @@ public class TaskController {
         this.taskRepository = taskRepository;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public Task createTask(@RequestBody Task task) {
         System.out.println("Received task: " + task);
         Task savedTask = taskRepository.save(task);
