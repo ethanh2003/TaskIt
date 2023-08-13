@@ -2,11 +2,13 @@ package com.example.tasker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
     private final TaskRepository taskRepository;
 
