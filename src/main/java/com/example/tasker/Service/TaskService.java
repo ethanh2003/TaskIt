@@ -1,5 +1,7 @@
-package com.example.tasker;
+package com.example.tasker.Service;
 
+import com.example.tasker.Repository.TaskRepository;
+import com.example.tasker.Classes.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

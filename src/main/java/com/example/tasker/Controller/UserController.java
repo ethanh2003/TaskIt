@@ -1,5 +1,9 @@
-package com.example.tasker;
+package com.example.tasker.Controller;
 
+import com.example.tasker.Classes.Task;
+import com.example.tasker.Request.UserLoginRequest;
+import com.example.tasker.Request.UserRegistrationRequest;
+import com.example.tasker.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

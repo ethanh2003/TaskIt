@@ -1,5 +1,10 @@
-package com.example.tasker;
+package com.example.tasker.Service;
 
+import com.example.tasker.Classes.Task;
+import com.example.tasker.Classes.User;
+import com.example.tasker.Repository.UserRepository;
+import com.example.tasker.Request.UserLoginRequest;
+import com.example.tasker.Request.UserRegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

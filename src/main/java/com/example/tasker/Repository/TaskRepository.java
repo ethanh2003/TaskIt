@@ -1,5 +1,6 @@
-package com.example.tasker;
+package com.example.tasker.Repository;
 
+import com.example.tasker.Classes.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

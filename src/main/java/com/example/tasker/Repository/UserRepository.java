@@ -1,5 +1,6 @@
-package com.example.tasker;
+package com.example.tasker.Repository;
 
+import com.example.tasker.Classes.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

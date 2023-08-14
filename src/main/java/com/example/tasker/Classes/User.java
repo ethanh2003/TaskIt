@@ -1,4 +1,4 @@
-package com.example.tasker;
+package com.example.tasker.Classes;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

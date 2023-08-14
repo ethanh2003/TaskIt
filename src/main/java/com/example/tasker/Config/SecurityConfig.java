@@ -1,4 +1,4 @@
-package com.example.tasker;
+package com.example.tasker.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

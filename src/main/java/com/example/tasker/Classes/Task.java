@@ -1,4 +1,4 @@
-package com.example.tasker;
+package com.example.tasker.Classes;
 
 import lombok.Getter;
 

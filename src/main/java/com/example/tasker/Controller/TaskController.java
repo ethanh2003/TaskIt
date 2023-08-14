@@ -1,5 +1,8 @@
-package com.example.tasker;
+package com.example.tasker.Controller;
 
+import com.example.tasker.Classes.Task;
+import com.example.tasker.TaskNotFoundException;
+import com.example.tasker.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
