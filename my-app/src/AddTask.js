@@ -10,7 +10,7 @@ const AddTask = ({ userId }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('/api/tasks', { id: null, title, description, completed: false }, { params: { userId } })
+        axios.post('/tasks', { id: null, title, description, completed: false }, { params: { userId } })
             .then(response => {
                 console.log('Task added successfully:', response.data);
 

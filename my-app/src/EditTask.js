@@ -10,7 +10,7 @@ const EditTask = ({ match }) => {
     const [description, setDescription] = useState('');
 
     useEffect(() => {
-        axios.get(`/api/tasks/${match.params.id}`)
+        axios.get(`/tasks/${match.params.id}`)
             .then(response => {
                 setTask(response.data);
                 setTitle(response.data.title);
@@ -28,7 +28,7 @@ const EditTask = ({ match }) => {
             description: description.trim(),
         };
 
-        axios.put(`/api/tasks/${task.id}`, updatedTask)
+        axios.put(`/tasks/${task.id}`, updatedTask)
             .then(response => {
                 console.log('Task updated successfully:', response.data);
 

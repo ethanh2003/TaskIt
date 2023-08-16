@@ -7,13 +7,13 @@ const TaskList = ({ userId }) => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/tasks`, { params: { userId } })
+        axios.get(`/tasks/`, { params: { userId } })
             .then(response => setTasks(response.data))
             .catch(error => console.error(error));
     }, [userId]);
 
     const deleteTask = (id) => {
-        axios.delete(`/api/tasks/${id}`)
+        axios.delete(`/tasks/${id}`)
             .then(response => {
                 console.log('Task deleted successfully:', id);
                 setTasks(tasks.filter(task => task.id !== id));
@@ -29,7 +29,7 @@ const TaskList = ({ userId }) => {
             return task;
         });
 
-        axios.put(`/api/tasks/${id}`, { completed: true })
+        axios.put(`/tasks/${id}`, { completed: true })
             .then(response => {
                 console.log('Task marked as completed:', response.data);
                 setTasks(updatedTasks);
