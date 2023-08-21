@@ -10,10 +10,10 @@ const App = () => {
     const [user, setUser] = useState(null);
 
 
-    const handleLogin = (userData) => {
-
-        setUser(userData);
+    const handleLogin = (sessionToken, userId) => {
+        setUser({ sessionToken, userId });
     };
+
 
 
     const handleLogout = () => {
@@ -29,20 +29,20 @@ const App = () => {
                     <Route
                         exact
                         path="/login"
-                        render={() => (user ? <Redirect to="/" /> : <UserLogin handleLogin={handleLogin} />)}
+                        render={() => (user ? <Redirect to="/tasks" /> : <UserLogin handleLogin={handleLogin} />)}
                     />
                     <Route
                         exact
                         path="/register"
-                        render={() => (user ? <Redirect to="/" /> : <UserRegister handleLogin={handleLogin} />)}
+                        render={() => (user ? <Redirect to="/tasks" /> : <UserRegister handleLogin={handleLogin} />)}
                     />
 
                     {}
                     {user ? (
                         <>
-                            <Route exact path="/" component={TaskList} />
+                            <Route exact path="/tasks" component={TaskList} />
                             <Route exact path="/add" component={AddTask} />
-                            <Route exact path="/edit/:id" component={EditTask} />
+                            <Route exact path="/tasks/:id" component={EditTask} />
                             <Route exact path="/register" component={UserRegister} />
                             <Route exact path="/login" component={UserLogin} />
                         </>

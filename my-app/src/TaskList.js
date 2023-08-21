@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useSession } from './SessionContext';
 
-
-const TaskList = ({ userId }) => {
+const TaskList = () => {
     const [tasks, setTasks] = useState([]);
+    const { userId, token } = useSession();
 
     useEffect(() => {
-        axios.get(`/tasks/`, { params: { userId } })
+        console.log(userId)
+        console.log(token)
+        axios.get(`/tasks`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: { userId }
+        })
             .then(response => setTasks(response.data))
             .catch(error => console.error(error));
-    }, [userId]);
+    }, [userId, token]);
+
 
     const deleteTask = (id) => {
-        axios.delete(`/tasks/${id}`)
+        axios.delete(`/${id}`)
             .then(response => {
                 console.log('Task deleted successfully:', id);
                 setTasks(tasks.filter(task => task.id !== id));
@@ -24,18 +33,22 @@ const TaskList = ({ userId }) => {
     const markAsCompleted = (id) => {
         const updatedTasks = tasks.map(task => {
             if (task.id === id) {
-                return { ...task, completed: true };
+                return {...task, completed: true};
             }
             return task;
         });
 
-        axios.put(`/tasks/${id}`, { completed: true })
+        axios.put(`/tasks/${id}/complete`, null, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(response => {
                 console.log('Task marked as completed:', response.data);
                 setTasks(updatedTasks);
             })
             .catch(error => console.error(error));
-    };
+    }
 
     const getStatusLabel = (completed) => {
         return completed ? 'Complete' : 'In Progress';
@@ -65,7 +78,7 @@ const TaskList = ({ userId }) => {
                             <button onClick={() => deleteTask(task.id)}>Delete</button>
                         </td>
                         <td style={cellStyle}>
-                            <Link to={`/edit/${task.id}`} style={editButtonStyle}>Edit</Link>
+                            <Link to={`/tasks/${task.id}`} style={editButtonStyle}>Edit</Link>
                         </td>
                     </tr>
                 ))}

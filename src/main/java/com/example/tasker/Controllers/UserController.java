@@ -1,23 +1,22 @@
-package com.example.tasker.Controller;
+package com.example.tasker.Controllers;
 
-import com.example.tasker.Classes.Task;
+import com.example.tasker.Classes.LoginResponse;
 import com.example.tasker.Request.UserLoginRequest;
 import com.example.tasker.Request.UserRegistrationRequest;
 import com.example.tasker.Service.UserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
 
@@ -34,26 +33,23 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
-        System.out.println("Received Username: " + loginRequest.getUsername());
-        System.out.println(loginRequest);
         if (userService.loginUser(loginRequest)) {
-            String token = "your_generated_token_here";
-            System.out.println("if");
+            Long userId = userService.getUserIdByUsername(loginRequest.getUsername());
+            String token = Jwts.builder()
+                    .setSubject(String.valueOf(userId))
+                    .claim("userId", userId)
+                    .signWith(SignatureAlgorithm.HS256, "6fsdukr1")
+                    .compact();
+
             HttpHeaders headers = new HttpHeaders();
             headers.add("Access-Control-Allow-Origin", "http://localhost:3000");
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new LoginResponse(token, userId));
         } else {
-            System.out.println("else");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
 
-    @GetMapping("/tasks")
-    public List<Task> getUserTasks(@AuthenticationPrincipal UserDetails userDetails) {
-        String username = userDetails.getUsername();
-        return userService.getUserTasks(username);
-    }
 
 }

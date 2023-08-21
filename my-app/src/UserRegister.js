@@ -16,6 +16,7 @@ const UserRegister = () => {
         try {
             await axios.post('/register', { username, password, email });
 
+
         } catch (error) {
             console.error('Registration failed:', error);
         }

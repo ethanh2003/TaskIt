@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { useSession } from './SessionContext';
 
 const UserLogin = ({ handleLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const { setSessionUserId, setSessionToken } = useSession();
+    const history = useHistory();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
 
         try {
             const response = await axios.post('/login', {
@@ -18,8 +21,15 @@ const UserLogin = ({ handleLogin }) => {
             });
 
             if (response.status === 200) {
-                const token = response.data;
-                handleLogin(token);
+                console.log('Login successful');
+                const token = response.data.token;
+                const userId = response.data.userId;
+
+                setSessionUserId(userId);
+                setSessionToken(token);
+                handleLogin(token, userId);
+
+                history.push('/tasks');
             } else {
                 setError('Invalid username or password');
             }

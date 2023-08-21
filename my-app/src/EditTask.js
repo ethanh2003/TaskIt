@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {Link} from "react-router-dom";
+import { useSession } from './SessionContext';
+import { Link, useHistory } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -8,32 +9,47 @@ const EditTask = ({ match }) => {
     const [task, setTask] = useState(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const { token } = useSession();
+    const history = useHistory();
 
     useEffect(() => {
-        axios.get(`/tasks/${match.params.id}`)
+        console.log("Fetching task details...");
+        axios.get(`/${match.params.id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(response => {
+                console.log("Task details fetched:", response.data);
                 setTask(response.data);
                 setTitle(response.data.title);
                 setDescription(response.data.description);
             })
             .catch(error => console.error(error));
-    }, [match.params.id]);
+    }, [match.params.id, token]);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const updatedTask = {
-            ...task,
             title: title.trim(),
             description: description.trim(),
+            completed: task.completed
         };
 
-        axios.put(`/tasks/${task.id}`, updatedTask)
+        axios.put(`/tasks/${task.id}`, updatedTask, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(response => {
                 console.log('Task updated successfully:', response.data);
-
+                history.push("/tasks");
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     if (!task) {
@@ -58,7 +74,7 @@ const EditTask = ({ match }) => {
                 />
                 <button type="submit">Update</button>
             </form>
-            <Link to="/">Home</Link>
+            <Link to="/tasks">Home</Link>
         </div>
     );
 };

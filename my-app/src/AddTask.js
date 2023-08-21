@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useSession } from './SessionContext';
+import {useHistory} from "react-router-dom";
+
 axios.defaults.withCredentials = true;
 
+const AddTask = () => {
+    const { userId, token } = useSession();
 
-const AddTask = ({ userId }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const history = useHistory();
 
+    console.log(userId)
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('/tasks', { id: null, title, description, completed: false }, { params: { userId } })
+        axios.post('/add', { id: null, title, description, completed: false }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                userId
+            }
+        })
             .then(response => {
                 console.log('Task added successfully:', response.data);
-
+                setTitle('');
+                setDescription('');
+                history.push("/tasks")
             })
-            .catch(error => console.error(error));
-
-        setTitle('');
-        setDescription('');
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     return (

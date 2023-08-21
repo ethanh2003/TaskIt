@@ -52,7 +52,7 @@ public class UserService {
         try {
             User user = entityManager.createQuery(jpql, User.class)
                     .setParameter("username", username)
-                    .setMaxResults(1) // Limit the result to at most one user
+                    .setMaxResults(1)
                     .getSingleResult();
             return Optional.ofNullable(user);
         } catch (NoResultException ex) {
@@ -63,6 +63,14 @@ public class UserService {
 
 
 
+    public Long getUserIdByUsername(String username) {
+        Optional<User> user = findByUsername(username);
+        if (user.isPresent()) {
+            return user.get().getId();
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
 
 
 
