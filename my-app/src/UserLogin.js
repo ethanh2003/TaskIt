@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSession } from './SessionContext';
+import './UserLogin.css';
 
 const UserLogin = ({ handleLogin }) => {
     const [username, setUsername] = useState('');
@@ -9,7 +10,6 @@ const UserLogin = ({ handleLogin }) => {
     const [error, setError] = useState('');
     const { setSessionUserId, setSessionToken } = useSession();
     const history = useHistory();
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,17 +39,29 @@ const UserLogin = ({ handleLogin }) => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Username:</label>
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                <label>Password:</label>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <div className="login-container">
+            <h2><center>Login</center></h2>
+            <form className="login-form" onSubmit={handleSubmit}>
+                <label htmlFor="username">Username:</label>
+                <input
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
                 <button type="submit">Login</button>
             </form>
-            {error && <p>{error}</p>}
-            <Link to="/register">Register</Link>
+            {error && <p className="error-message">{error}</p>}
+            <Link to="/register" className="register-link">
+                Don't have an account? Register here.
+            </Link>
         </div>
     );
 };

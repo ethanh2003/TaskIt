@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSession } from './SessionContext';
-import {useHistory} from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import './AddTask.css'; // Import your CSS file
 
 axios.defaults.withCredentials = true;
 
@@ -12,7 +13,6 @@ const AddTask = () => {
     const [description, setDescription] = useState('');
     const history = useHistory();
 
-    console.log(userId)
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -28,7 +28,7 @@ const AddTask = () => {
                 console.log('Task added successfully:', response.data);
                 setTitle('');
                 setDescription('');
-                history.push("/tasks")
+                history.push('/tasks');
             })
             .catch(error => {
                 console.error(error);
@@ -36,15 +36,30 @@ const AddTask = () => {
     };
 
     return (
-        <div>
-            <h2>Add Task</h2>
+        <div className="add-task-container">
+            <h2><center>Add Task</center></h2>
             <form onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <label>Description:</label>
-                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
-                <button type="submit">Add</button>
+                <label htmlFor="title"><b>Title:</b></label>
+                <input
+                    type="text"
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="task-input"
+                />
+                <label htmlFor="description"><b>Description:</b></label>
+                <input
+                    type="text"
+                    id="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="task-input"
+                />
+                <button type="submit" className="add-button">Add</button>
             </form>
+            <button onClick={() => history.push('/tasks')} className="back-button">
+                Back to Tasks
+            </button>
         </div>
     );
 };

@@ -75,11 +75,12 @@ public class TaskController {
         Task existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
 
-        existingTask.setCompleted(true);
+        existingTask.setCompleted(!existingTask.isCompleted());
 
-        Task completedTask = taskRepository.save(existingTask);
-        return completedTask;
+        Task updatedTask = taskRepository.save(existingTask);
+        return updatedTask;
     }
+
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         if (taskRepository.existsById(id)) {
