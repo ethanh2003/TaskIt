@@ -18,7 +18,7 @@ public class Task {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
-    // Add a userId field
+
     @Column(name = "user_id")
     private Long userId;
 

@@ -12,7 +12,6 @@ import java.util.List;
 
 
 @RestController
-//@RequestMapping("/")
 @CrossOrigin(origins = "*")
 public class TaskController {
     private final TaskRepository taskRepository;

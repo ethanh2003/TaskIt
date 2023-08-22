@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useSession } from './SessionContext';
 import { useHistory } from 'react-router-dom';
-import './AddTask.css'; // Import your CSS file
+import './AddTask.css';
 
 axios.defaults.withCredentials = true;
 
